@@ -468,6 +468,7 @@
                 display: flex;
                 flex-wrap: wrap;
             }
+
             .sticky-desktop {
                 position: sticky;
                 top: 10px;
@@ -511,7 +512,8 @@
                         <div class="text-center add-btn-wrapper" style="margin-top: 5px; margin-bottom: 0;">
                             <button id="add-player-btn" class="btn btn-primary btn-sm" onclick="addPlayer()">+ Add
                                 Player</button>
-                            <button class="btn btn-default btn-sm" style="margin-left: 5px;" onclick="resetAll()">Reset All</button>
+                            <button class="btn btn-default btn-sm" style="margin-left: 5px;" onclick="resetAll()">Reset
+                                All</button>
                         </div>
                     </div>
 
@@ -582,16 +584,17 @@
                         <hr style="border-color: var(--border-color); margin-top: 10px; margin-bottom: 5px;">
                         <div class="row">
                             <div class="col-xs-6">
-                                <h6 style="margin-top: 5px; margin-bottom: 2px;">Your player:</h6>
+                                <h6 style="margin-top: 5px; margin-bottom: 2px;">Your player's specialty:</h6>
                                 <div class="checkbox" style="margin-top: 2px; margin-bottom: 2px;">
                                     <label><input type="checkbox" id="mm-powerful"> <small>Powerful</small></label>
                                 </div>
                                 <div class="checkbox" style="margin-top: 2px; margin-bottom: 2px;">
-                                    <label><input type="checkbox" id="mm-specless"> <small>Specless</small></label>
+                                    <label><input type="checkbox" id="mm-specless"> <small>Specless
+                                            (none)</small></label>
                                 </div>
                             </div>
                             <div class="col-xs-6">
-                                <h6 style="margin-top: 5px; margin-bottom: 2px;">Marked player:</h6>
+                                <h6 style="margin-top: 5px; margin-bottom: 2px;">Marked player's specialty:</h6>
                                 <div class="checkbox" style="margin-top: 2px; margin-bottom: 2px;">
                                     <label><input type="checkbox" id="mm-technical"> <small>Technical</small></label>
                                 </div>
@@ -606,9 +609,11 @@
 
                         <div class="row" style="text-align: center;">
                             <div class="col-xs-6">
-                                <h4 style="color: var(--text-color); margin-top: 0px; margin-bottom: 2px; font-size: 16px;">
+                                <h4
+                                    style="color: var(--text-color); margin-top: 0px; margin-bottom: 2px; font-size: 16px;">
                                     Penalty</h4>
-                                <div style="font-size: 30px; font-weight: bold; line-height: 1; color: #d9534f;" id="mm-penalty-result">
+                                <div style="font-size: 30px; font-weight: bold; line-height: 1; color: #d9534f;"
+                                    id="mm-penalty-result">
                                     50.00%</div>
                             </div>
                             <div class="col-xs-6" style="border-left: 1px solid var(--border-color);">
@@ -799,6 +804,21 @@
                         <div class="input-container" style="text-align: center;">
                             <i class="fa fa-heart mother-club-btn" onclick="toggleMotherClub(${id}, this)"></i>
                         </div>
+                    </div>
+                    <div class="skill-row">
+                        <label>Specialty</label>
+                        <div style="flex-grow: 1;">
+                            <select class="form-control input-sm specialty-select" style="width: 100%; max-width: 150px; height: 26px; padding: 2px 5px; font-size: 12px; border-color: var(--border-color); background: var(--panel-bg); color: var(--text-color);">
+                                <option value="none">None</option>
+                                <option value="powerful">Powerful</option>
+                                <option value="technical">Technical</option>
+                                <option value="unpredictable">Unpredictable</option>
+                                <option value="header">Header</option>
+                                <option value="quick">Quick</option>
+                                <option value="support">Support</option>
+                                <option value="resilient">Resilient</option>
+                            </select>
+                        </div>
                     </div><hr style="border-color: var(--border-color);">`;
                 }
             });
@@ -852,21 +872,23 @@
 
         function resetPlayer(id) {
             var $card = $('#player-card-' + id);
-            
+
             var $motherClubBtn = $card.find('.mother-club-btn');
             if ($motherClubBtn.hasClass('active')) {
                 $motherClubBtn.removeClass('active');
             }
-            
+
+            $card.find('.specialty-select').val('none');
+
             $card.find('input.native-slider, input.skill-input').val('1.0');
             recomputeValue(id);
         }
 
         function resetAll() {
-            activePlayers.forEach(function(id) {
+            activePlayers.forEach(function (id) {
                 resetPlayer(id);
             });
-            
+
             $('#mm-def-slider, #mm-hs-slider').val(10);
             $('#mm-def-input, #mm-hs-input').val('10.0');
             $('#mm-powerful, #mm-specless, #mm-technical, #mm-unpredictable').prop('checked', false);
@@ -878,11 +900,11 @@
             $btn.toggleClass('active');
             var isActive = $btn.hasClass('active');
             var loyaltyVal = isActive ? 20 : 1;
-            
+
             var card = $('#player-card-' + id);
             card.find('input.native-slider[data-skill="loyalty"]').val(loyaltyVal);
             card.find('input.skill-input[data-skill="loyalty"]').val(loyaltyVal.toFixed(1));
-            
+
             recomputeValue(id);
         }
 
@@ -891,7 +913,7 @@
             if (cardEl) {
                 cardEl.style.setProperty('--player-color', newColor);
             }
-            
+
             var series = chart.get('player-' + id);
             if (series) {
                 series.update({ color: newColor });
@@ -1000,6 +1022,15 @@
             var defValue = series.yData[1]; // Index 1 is Defender
             $('#mm-def-input').val(defValue.toFixed(1));
             $('#mm-def-slider').val(defValue);
+            
+            var spec = $('#player-card-' + id).find('.specialty-select').val();
+            $('#mm-powerful, #mm-specless').prop('checked', false);
+            if (spec === 'none') {
+                $('#mm-specless').prop('checked', true);
+            } else if (spec === 'powerful') {
+                $('#mm-powerful').prop('checked', true);
+            }
+            
             calcManMarking();
         }
 
@@ -1009,6 +1040,15 @@
             var hsValue = Math.max.apply(null, series.yData); // Max of all skills
             $('#mm-hs-input').val(hsValue.toFixed(1));
             $('#mm-hs-slider').val(hsValue);
+            
+            var spec = $('#player-card-' + id).find('.specialty-select').val();
+            $('#mm-technical, #mm-unpredictable').prop('checked', false);
+            if (spec === 'technical') {
+                $('#mm-technical').prop('checked', true);
+            } else if (spec === 'unpredictable') {
+                $('#mm-unpredictable').prop('checked', true);
+            }
+            
             calcManMarking();
         }
 
