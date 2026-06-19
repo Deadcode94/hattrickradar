@@ -19,4 +19,3 @@ Simply visit the [website](https://deadcode94.github.io/hattrickradar/) or downl
 ## 👨‍💻 Credits
 
 - **Original Project**: Coded by [MarGar](https://github.com/margar94) & [Giupino](https://github.com/giupino82).
-- **Forked and Maintained by**: [Deadcode94](https://github.com/Deadcode94).
