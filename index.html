@@ -429,8 +429,8 @@
 
     <div class="container-fluid" style="padding: 0 5%;">
         <div class="row">
-            <div class="col-md-12 text-center"><br>
-                <h1>Compare players</h1>
+            <div class="col-md-12 text-center" style="margin-top: 10px; margin-bottom: 10px;">
+                <h2 style="margin: 0;">Compare players</h2>
             </div>
         </div>
     </div>
@@ -439,19 +439,19 @@
         <div class="row" style="display: flex; flex-wrap: wrap;">
             <!-- Chart on Left -->
             <div class="col-md-5 col-lg-4">
-                <div style="position: sticky; top: 20px; z-index: 1000;">
-                    <div id="radarChart">
-                        <div id="container" style="height: 380px;"></div>
-                        <div class="text-center add-btn-wrapper" style="margin-top: 10px;">
-                            <button id="add-player-btn" class="btn btn-primary" onclick="addPlayer()">+ Add
+                <div style="position: sticky; top: 10px; z-index: 1000;">
+                    <div id="radarChart" style="padding: 10px; margin-bottom: 10px;">
+                        <div id="container" style="height: 300px;"></div>
+                        <div class="text-center add-btn-wrapper" style="margin-top: 5px; margin-bottom: 0;">
+                            <button id="add-player-btn" class="btn btn-primary btn-sm" onclick="addPlayer()">+ Add
                                 Player</button>
                         </div>
                     </div>
 
                     <!-- Man Marking Calculator -->
-                    <div class="player-card" id="man-marking-section" style="margin-bottom: 20px;">
-                        <h4 class="text-center" style="margin-top: 0; font-weight: bold;">Man Marking Calculator</h4>
-                        <hr style="border-color: var(--border-color);">
+                    <div class="player-card" id="man-marking-section" style="margin-bottom: 10px; padding: 15px;">
+                        <h5 class="text-center" style="margin-top: 0; margin-bottom: 5px; font-weight: bold;">Man Marking Calculator</h5>
+                        <hr style="border-color: var(--border-color); margin-top: 5px; margin-bottom: 10px;">
 
                         <div class="skill-row" style="flex-wrap: wrap;">
                             <label style="width: 100%; margin-bottom: 5px;">Defending of your player:</label>
@@ -476,8 +476,8 @@
                             </div>
                         </div>
 
-                        <div class="skill-row" style="margin-top: 15px; flex-wrap: wrap;">
-                            <label style="width: 100%; margin-bottom: 5px;">Highest skill of marked player:</label>
+                        <div class="skill-row" style="margin-top: 8px; flex-wrap: wrap;">
+                            <label style="width: 100%; margin-bottom: 2px;">Highest skill of marked player:</label>
                             <div class="slider-container" style="width: 50%">
                                 <input type="range" class="native-slider" id="mm-hs-slider" min="1" max="20" step="0.1"
                                     value="10">
@@ -499,30 +499,29 @@
                             </div>
                         </div>
 
-                        <hr style="border-color: var(--border-color); margin-top: 15px;">
+                        <hr style="border-color: var(--border-color); margin-top: 10px; margin-bottom: 5px;">
                         <div class="row">
                             <div class="col-xs-6">
-                                <h5>Your player:</h5>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" id="mm-powerful"> <strong>Powerful</strong></label>
+                                <h6 style="margin-top: 5px; margin-bottom: 2px;">Your player:</h6>
+                                <div class="checkbox" style="margin-top: 2px; margin-bottom: 2px;">
+                                    <label><input type="checkbox" id="mm-powerful"> <small>Powerful</small></label>
                                 </div>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" id="mm-specless"> <strong>Specless</strong></label>
+                                <div class="checkbox" style="margin-top: 2px; margin-bottom: 2px;">
+                                    <label><input type="checkbox" id="mm-specless"> <small>Specless</small></label>
                                 </div>
                             </div>
                             <div class="col-xs-6">
-                                <h5>Marked player:</h5>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" id="mm-technical"> <strong>Technical</strong></label>
+                                <h6 style="margin-top: 5px; margin-bottom: 2px;">Marked player:</h6>
+                                <div class="checkbox" style="margin-top: 2px; margin-bottom: 2px;">
+                                    <label><input type="checkbox" id="mm-technical"> <small>Technical</small></label>
                                 </div>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" id="mm-unpredictable">
-                                        <strong>Unpredictable</strong></label>
+                                <div class="checkbox" style="margin-top: 2px; margin-bottom: 2px;">
+                                    <label><input type="checkbox" id="mm-unpredictable"> <small>Unpredictable</small></label>
                                 </div>
                             </div>
                         </div>
 
-                        <hr style="border-color: var(--border-color); margin-top: 15px;">
+                        <hr style="border-color: var(--border-color); margin-top: 5px; margin-bottom: 10px;">
 
                         <div class="row" style="text-align: center; display: flex; align-items: center;">
                             <div class="col-xs-6">
