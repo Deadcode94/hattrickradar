@@ -464,6 +464,10 @@
         }
 
         @media (min-width: 992px) {
+            .flex-row-desktop {
+                display: flex;
+                flex-wrap: wrap;
+            }
             .sticky-desktop {
                 position: sticky;
                 top: 10px;
@@ -477,8 +481,7 @@
 <body>
     <nav class="navbar custom-navbar">
         <div class="container-fluid" style="padding: 0 5%;">
-            <div class="navbar-header"
-                style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+            <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
                 <a class="navbar-brand logo" href="index.html" style="float: none; height: auto; padding: 15px 0;">
                     <h1 style="margin: 0;">HT<span>Radar</span></h1>
                 </a>
@@ -499,7 +502,7 @@
     </div>
 
     <div class="container-fluid" style="padding: 0 5%; margin-bottom: 60px;">
-        <div class="row">
+        <div class="row flex-row-desktop">
             <!-- Chart on Left -->
             <div class="col-md-5 col-lg-4">
                 <div class="sticky-desktop">
@@ -603,14 +606,14 @@
 
                         <div class="row" style="text-align: center;">
                             <div class="col-xs-6">
-                                <h4 style="color: #d9534f; margin-top: 0px; margin-bottom: 2px; font-size: 16px;">
+                                <h4 style="color: var(--text-color); margin-top: 0px; margin-bottom: 2px; font-size: 16px;">
                                     Penalty</h4>
-                                <div style="font-size: 30px; font-weight: bold; line-height: 1;" id="mm-penalty-result">
+                                <div style="font-size: 30px; font-weight: bold; line-height: 1; color: #d9534f;" id="mm-penalty-result">
                                     50.00%</div>
                             </div>
                             <div class="col-xs-6" style="border-left: 1px solid var(--border-color);">
                                 <h5 style="margin-top: 0px; margin-bottom: 2px; font-size: 14px;">Marked skill</h5>
-                                <div style="font-size: 26px; font-weight: bold; color: #277F31; line-height: 1.1;"
+                                <div style="font-size: 26px; font-weight: bold; color: #d9534f; line-height: 1.1;"
                                     id="mm-performance-result">5.00</div>
                             </div>
                         </div>
@@ -748,7 +751,14 @@
             chart.update({
                 xAxis: { labels: { style: { color: textColor } } },
                 yAxis: { gridLineColor: gridColor },
-                legend: { itemStyle: { color: textColor } }
+                legend: { itemStyle: { color: textColor } },
+                exporting: {
+                    buttons: {
+                        contextButton: {
+                            symbolStroke: textColor
+                        }
+                    }
+                }
             });
         }
 
