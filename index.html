@@ -726,6 +726,55 @@
         var nextPlayerId = 1;
         var playerColors = ['#277f31', '#149bdf', '#d9534f', '#f0ad4e', '#5bc0de', '#9b59b6'];
 
+        function saveState() {
+            // Prevent saving before initial load is complete
+            if (!chart) return;
+            
+            var state = { players: [], manMarking: {} };
+            activePlayers.forEach(function (id) {
+                var $card = $('#player-card-' + id);
+                if (!$card.length) return;
+                
+                var pState = {
+                    id: id,
+                    color: $card.find('.color-indicator').val() || $card.find('.player-card').css('--player-color'),
+                    name: $card.find('.player-name-input').val(),
+                    specialty: $card.find('.specialty-select').val(),
+                    motherClub: $card.find('.mother-club-btn').hasClass('active'),
+                    skills: {}
+                };
+                $card.find('.skill-input').each(function () {
+                    var s = $(this).data('skill');
+                    pState.skills[s] = $(this).val();
+                });
+                state.players.push(pState);
+            });
+
+            state.manMarking = {
+                defInput: $('#mm-def-input').val(),
+                hsInput: $('#mm-hs-input').val(),
+                powerful: $('#mm-powerful').is(':checked'),
+                specless: $('#mm-specless').is(':checked'),
+                technical: $('#mm-technical').is(':checked'),
+                unpredictable: $('#mm-unpredictable').is(':checked')
+            };
+
+            localStorage.setItem('htradar_state', JSON.stringify(state));
+        }
+
+        function loadState() {
+            var saved = localStorage.getItem('htradar_state');
+            if (saved) {
+                try {
+                    var state = JSON.parse(saved);
+                    if (state && state.players && state.players.length > 0) {
+                        return state;
+                    }
+                } catch (e) { }
+            }
+            return null;
+        }
+
         function initApp() {
             chart = Highcharts.chart('container', radarOptions);
 
@@ -736,8 +785,45 @@
                 updateChartTheme();
             }
 
-            addPlayer(); // Add Player 1
-            addPlayer(); // Add Player 2
+            var state = loadState();
+            if (state) {
+                state.players.forEach(function (p) {
+                    addPlayer(p.color);
+                    var id = activePlayers[activePlayers.length - 1];
+                    var $card = $('#player-card-' + id);
+
+                    $card.find('.player-name-input').val(p.name);
+                    $card.find('.specialty-select').val(p.specialty);
+                    if (p.motherClub) {
+                        $card.find('.mother-club-btn').addClass('active');
+                    }
+                    
+                    for (var s in p.skills) {
+                        $card.find('.skill-input[data-skill="' + s + '"]').val(p.skills[s]);
+                        $card.find('.native-slider[data-skill="' + s + '"]').val(p.skills[s]);
+                    }
+                    
+                    if (p.color) {
+                        $card.find('.color-indicator').val(p.color);
+                    }
+                    
+                    recomputeValue(id);
+                });
+
+                if (state.manMarking) {
+                    $('#mm-def-input').val(state.manMarking.defInput);
+                    $('#mm-def-slider').val(state.manMarking.defInput);
+                    $('#mm-hs-input').val(state.manMarking.hsInput);
+                    $('#mm-hs-slider').val(state.manMarking.hsInput);
+                    $('#mm-powerful').prop('checked', state.manMarking.powerful);
+                    $('#mm-specless').prop('checked', state.manMarking.specless);
+                    $('#mm-technical').prop('checked', state.manMarking.technical);
+                    $('#mm-unpredictable').prop('checked', state.manMarking.unpredictable);
+                }
+            } else {
+                addPlayer(); // Add Player 1
+                addPlayer(); // Add Player 2
+            }
         }
 
         function toggleDarkMode() {
@@ -845,11 +931,11 @@
             return html;
         }
 
-        function addPlayer() {
+        function addPlayer(overrideColor) {
             if (activePlayers.length >= 6) return;
             var id = nextPlayerId++;
             activePlayers.push(id);
-            var color = playerColors[(id - 1) % 6];
+            var color = overrideColor || playerColors[(id - 1) % 6];
 
             $("#players-container").append(getPlayerCardHtml(id, color));
 
@@ -878,6 +964,7 @@
             chart.get('player-' + id).remove();
             $("#add-player-btn").show();
             updateManMarkingImportLists();
+            saveState();
         }
 
         function resetPlayer(id) {
@@ -895,13 +982,24 @@
         }
 
         function resetAll() {
-            activePlayers.forEach(function (id) {
-                resetPlayer(id);
-            });
-
+            localStorage.removeItem('htradar_state');
+            
+            // Remove all existing players
+            activePlayers = [];
+            nextPlayerId = 1;
+            $("#players-container").empty();
+            while(chart.series.length > 0) chart.series[0].remove(true);
+            
+            // Reset Man Marking sliders and checkboxes
             $('#mm-def-slider, #mm-hs-slider').val(10);
             $('#mm-def-input, #mm-hs-input').val('10.0');
             $('#mm-powerful, #mm-specless, #mm-technical, #mm-unpredictable').prop('checked', false);
+            
+            // Add two default players
+            addPlayer();
+            addPlayer();
+            
+            // Recalculate Man Marking
             calcManMarking();
         }
 
@@ -928,6 +1026,7 @@
             if (series) {
                 series.update({ color: newColor });
             }
+            saveState();
         }
 
         function attachSliderEvents(id) {
@@ -1007,6 +1106,7 @@
                 series.update({ name: name }, false);
                 chart.redraw();
                 updateManMarkingImportLists();
+                saveState();
             }
         }
 
@@ -1086,6 +1186,7 @@
 
             $('#mm-penalty-result').text((penalty * 100).toFixed(2) + '%');
             $('#mm-performance-result').text(performance.toFixed(2));
+            saveState();
         }
 
         $(document).ready(function () {
