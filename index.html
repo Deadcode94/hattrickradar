@@ -381,23 +381,28 @@
             display: flex;
             align-items: center;
             flex: 1;
+            margin-right: 20px;
         }
 
         .player-name-input {
-            border: none;
-            background: transparent;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border: none !important;
+            background: transparent !important;
+            box-shadow: none !important;
             color: var(--text-color);
             font-size: 1.2em;
             font-weight: bold;
             flex: 1;
             margin-left: 10px;
-            outline: none;
+            outline: none !important;
             transition: border-bottom 0.2s;
-            border-bottom: 1px dashed transparent;
+            border-bottom: 1px dashed var(--border-color) !important;
         }
 
         .player-name-input:focus {
-            border-bottom: 1px dashed var(--player-color);
+            border-bottom: 1px dashed var(--player-color) !important;
         }
 
         .remove-player-btn {
@@ -412,6 +417,19 @@
         .remove-player-btn:hover {
             opacity: 1;
             transform: scale(1.1);
+        }
+
+        .reset-player-btn {
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 1.2em;
+            opacity: 0.7;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        .reset-player-btn:hover {
+            opacity: 1;
+            transform: rotate(-90deg);
         }
 
         #radarChart {
@@ -471,6 +489,7 @@
                         <div class="text-center add-btn-wrapper" style="margin-top: 5px; margin-bottom: 0;">
                             <button id="add-player-btn" class="btn btn-primary btn-sm" onclick="addPlayer()">+ Add
                                 Player</button>
+                            <button class="btn btn-default btn-sm" style="margin-left: 5px;" onclick="resetAll()">Reset All</button>
                         </div>
                     </div>
 
@@ -730,7 +749,10 @@
                     <span class="color-indicator"></span>
                     <input type="text" class="player-name-input" value="Custom Player ${id}" onchange="recomputeValue(${id})" onfocus="this.select()">
                 </div>
-                <i class="fa fa-times remove-player-btn" onclick="removePlayer(${id})" title="Remove Player"></i>
+                <div>
+                    <i class="fa fa-undo reset-player-btn" onclick="resetPlayer(${id})" title="Reset Player" style="margin-right: 15px;"></i>
+                    <i class="fa fa-times remove-player-btn" onclick="removePlayer(${id})" title="Remove Player"></i>
+                </div>
             </div>`;
 
             genericSkills.forEach(s => {
@@ -795,6 +817,29 @@
             chart.get('player-' + id).remove();
             $("#add-player-btn").show();
             updateManMarkingImportLists();
+        }
+
+        function resetPlayer(id) {
+            var $card = $('#player-card-' + id);
+            
+            var $motherClubBtn = $card.find('.mother-club-btn');
+            if ($motherClubBtn.hasClass('active')) {
+                $motherClubBtn.removeClass('active');
+            }
+            
+            $card.find('input.native-slider, input.skill-input').val('1.0');
+            recomputeValue(id);
+        }
+
+        function resetAll() {
+            activePlayers.forEach(function(id) {
+                resetPlayer(id);
+            });
+            
+            $('#mm-def-slider, #mm-hs-slider').val(10);
+            $('#mm-def-input, #mm-hs-input').val('10.0');
+            $('#mm-powerful, #mm-specless, #mm-technical, #mm-unpredictable').prop('checked', false);
+            calcManMarking();
         }
 
         function toggleMotherClub(id, btn) {
