@@ -360,12 +360,31 @@
         }
 
         .color-indicator {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: none;
+            cursor: pointer;
             border-radius: 50%;
-            background-color: var(--player-color);
+            background-color: transparent;
+            padding: 0;
             flex-shrink: 0;
+        }
+
+        .color-indicator::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+
+        .color-indicator::-webkit-color-swatch {
+            border: none;
+            border-radius: 50%;
+        }
+
+        .color-indicator::-moz-color-swatch {
+            border: none;
+            border-radius: 50%;
         }
 
         .player-header {
@@ -733,6 +752,8 @@
             });
         }
 
+
+
         function getPlayerCardHtml(id, color) {
             var genericSkills = [
                 { id: 'stamina', name: 'Stamina', min: 1, max: 9 },
@@ -746,7 +767,7 @@
             html += `<div class="player-card" style="--player-color: ${color}">`;
             html += `<div class="player-header">
                 <div class="player-header-left">
-                    <span class="color-indicator"></span>
+                    <input type="color" class="color-indicator" value="${color}" oninput="changePlayerColor(${id}, this.value)" onchange="changePlayerColor(${id}, this.value)" title="Change Player Color">
                     <input type="text" class="player-name-input" value="Custom Player ${id}" onchange="recomputeValue(${id})" onfocus="this.select()">
                 </div>
                 <div>
@@ -853,6 +874,18 @@
             card.find('input.skill-input[data-skill="loyalty"]').val(loyaltyVal.toFixed(1));
             
             recomputeValue(id);
+        }
+
+        function changePlayerColor(id, newColor) {
+            var cardEl = document.querySelector('#player-card-' + id + ' .player-card');
+            if (cardEl) {
+                cardEl.style.setProperty('--player-color', newColor);
+            }
+            
+            var series = chart.get('player-' + id);
+            if (series) {
+                series.update({ color: newColor });
+            }
         }
 
         function attachSliderEvents(id) {
