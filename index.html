@@ -398,6 +398,14 @@
         .add-btn-wrapper {
             margin: 20px 0;
         }
+
+        @media (min-width: 992px) {
+            .sticky-desktop {
+                position: sticky;
+                top: 10px;
+                z-index: 1000;
+            }
+        }
     </style>
 
 </head>
@@ -405,24 +413,13 @@
 <body>
     <nav class="navbar custom-navbar">
         <div class="container-fluid" style="padding: 0 5%;">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand logo" href="index.html">
-                    <h1>HT<span>Radar</span></h1>
+            <div class="navbar-header" style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+                <a class="navbar-brand logo" href="index.html" style="float: none; height: auto; padding: 15px 0;">
+                    <h1 style="margin: 0;">HT<span>Radar</span></h1>
                 </a>
-            </div>
-
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#" id="theme-toggle-btn" onclick="toggleDarkMode(); return false;"><i
-                                class="fa fa-moon-o"></i> Dark Mode</a></li>
-                </ul>
+                <a href="#" id="theme-toggle-btn" onclick="toggleDarkMode(); return false;" style="color: var(--text-color); text-decoration: none;">
+                    <i class="fa fa-moon-o"></i> Dark Mode
+                </a>
             </div>
         </div>
     </nav>
@@ -436,10 +433,10 @@
     </div>
 
     <div class="container-fluid" style="padding: 0 5%; margin-bottom: 60px;">
-        <div class="row" style="display: flex; flex-wrap: wrap;">
+        <div class="row">
             <!-- Chart on Left -->
             <div class="col-md-5 col-lg-4">
-                <div style="position: sticky; top: 10px; z-index: 1000;">
+                <div class="sticky-desktop">
                     <div id="radarChart" style="padding: 10px; margin-bottom: 10px;">
                         <div id="container" style="height: 300px;"></div>
                         <div class="text-center add-btn-wrapper" style="margin-top: 5px; margin-bottom: 0;">
@@ -453,17 +450,23 @@
                         <h5 class="text-center" style="margin-top: 0; margin-bottom: 5px; font-weight: bold;">Man Marking Calculator</h5>
                         <hr style="border-color: var(--border-color); margin-top: 5px; margin-bottom: 10px;">
 
-                        <div class="skill-row" style="flex-wrap: wrap;">
-                            <label style="width: 100%; margin-bottom: 5px;">Defending of your player:</label>
-                            <div class="slider-container" style="width: 50%">
-                                <input type="range" class="native-slider" id="mm-def-slider" min="1" max="20" step="0.1"
-                                    value="10">
+                        <div class="row" style="margin-bottom: 5px;">
+                            <div class="col-xs-12">
+                                <label style="margin-bottom: 5px;">Defending of your player:</label>
                             </div>
-                            <div class="input-container" style="width: 25%">
-                                <input type="number" class="skill-input" id="mm-def-input" min="1" max="20" step="0.1"
-                                    value="10.0" onfocus="this.select()">
+                            <div class="col-xs-12 col-sm-6" style="margin-bottom: 5px;">
+                                <div class="slider-container" style="width: 100%">
+                                    <input type="range" class="native-slider" id="mm-def-slider" min="1" max="20" step="0.1"
+                                        value="10">
+                                </div>
                             </div>
-                            <div style="width: 25%; text-align: right;">
+                            <div class="col-xs-6 col-sm-3">
+                                <div class="input-container" style="width: 100%">
+                                    <input type="number" class="skill-input" id="mm-def-input" min="1" max="20" step="0.1"
+                                        value="10.0" onfocus="this.select()">
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-3 text-right">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-default btn-xs dropdown-toggle"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -476,17 +479,23 @@
                             </div>
                         </div>
 
-                        <div class="skill-row" style="margin-top: 8px; flex-wrap: wrap;">
-                            <label style="width: 100%; margin-bottom: 2px;">Highest skill of marked player:</label>
-                            <div class="slider-container" style="width: 50%">
-                                <input type="range" class="native-slider" id="mm-hs-slider" min="1" max="20" step="0.1"
-                                    value="10">
+                        <div class="row" style="margin-top: 8px;">
+                            <div class="col-xs-12">
+                                <label style="margin-bottom: 2px;">Highest skill of marked player:</label>
                             </div>
-                            <div class="input-container" style="width: 25%">
-                                <input type="number" class="skill-input" id="mm-hs-input" min="1" max="20" step="0.1"
-                                    value="10.0" onfocus="this.select()">
+                            <div class="col-xs-12 col-sm-6" style="margin-bottom: 5px;">
+                                <div class="slider-container" style="width: 100%">
+                                    <input type="range" class="native-slider" id="mm-hs-slider" min="1" max="20" step="0.1"
+                                        value="10">
+                                </div>
                             </div>
-                            <div style="width: 25%; text-align: right;">
+                            <div class="col-xs-6 col-sm-3">
+                                <div class="input-container" style="width: 100%">
+                                    <input type="number" class="skill-input" id="mm-hs-input" min="1" max="20" step="0.1"
+                                        value="10.0" onfocus="this.select()">
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-3 text-right">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-default btn-xs dropdown-toggle"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -523,7 +532,7 @@
 
                         <hr style="border-color: var(--border-color); margin-top: 5px; margin-bottom: 10px;">
 
-                        <div class="row" style="text-align: center; display: flex; align-items: center;">
+                        <div class="row" style="text-align: center;">
                             <div class="col-xs-6">
                                 <h4 style="color: #d9534f; margin-top: 0px; margin-bottom: 2px; font-size: 16px;">
                                     Penalty</h4>
