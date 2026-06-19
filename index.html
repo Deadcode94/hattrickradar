@@ -373,13 +373,13 @@
 		
 		var html = `<div class="col-md-6 col-sm-12" id="player-card-${id}">`;
 		html += `<div class="player-card" style="--player-color: ${color}">`;
-		html += `<div><span class="color-indicator"></span><input type="text" class="player-name-input" value="Custom Player ${id}" onchange="recomputeValue(${id})"> <i class="fa fa-times remove-player-btn" onclick="removePlayer(${id})"></i></div>`;
+		html += `<div><span class="color-indicator"></span><input type="text" class="player-name-input" value="Custom Player ${id}" onchange="recomputeValue(${id})" onfocus="this.select()"> <i class="fa fa-times remove-player-btn" onclick="removePlayer(${id})"></i></div>`;
 		
 		genericSkills.forEach(s => {
 			html += `<div class="skill-row">
 				<label>${s.name}</label>
 				<div class="slider-container"><input type="range" class="native-slider" data-skill="${s.id}" min="${s.min}" max="${s.max}" step="0.1" value="1.0"></div>
-				<div class="input-container"><input type="number" step="0.1" min="${s.min}" max="${s.max}" class="skill-input" data-skill="${s.id}" value="1.0"></div>
+				<div class="input-container"><input type="number" step="0.1" min="${s.min}" max="${s.max}" class="skill-input" data-skill="${s.id}" value="1.0" onfocus="this.select()"></div>
 			</div>`;
             if (s.id === 'loyalty') {
                 html += `<div class="skill-row"><label>Mother club bonus</label><div><i class="fa fa-heart mother-club-btn" onclick="$(this).toggleClass('active'); recomputeValue(${id})"></i></div></div><hr style="border-color: var(--border-color);">`;
@@ -390,7 +390,7 @@
 			html += `<div class="skill-row">
 				<label>${s}</label>
 				<div class="slider-container"><input type="range" class="native-slider" data-skill="${s}" min="1" max="20" step="0.1" value="1.0"></div>
-				<div class="input-container"><input type="number" step="0.1" min="1" max="20" class="skill-input" data-skill="${s}" value="1.0"></div>
+				<div class="input-container"><input type="number" step="0.1" min="1" max="20" class="skill-input" data-skill="${s}" value="1.0" onfocus="this.select()"></div>
 			</div>`;
 		});
 		
@@ -455,6 +455,18 @@
 		$card.find(".skill-input").on("input change", function() {
 			var val = parseFloat($(this).val());
 			if (isNaN(val)) return;
+			
+			var min = parseFloat($(this).attr('min'));
+			var max = parseFloat($(this).attr('max'));
+			var clampedVal = val;
+			if (!isNaN(min) && clampedVal < min) clampedVal = min;
+			if (!isNaN(max) && clampedVal > max) clampedVal = max;
+			
+			if (val !== clampedVal) {
+				$(this).val(clampedVal.toFixed(1));
+				val = clampedVal;
+			}
+			
 			var skill = $(this).data("skill");
 			var $slider = $card.find('input.native-slider[data-skill="' + skill + '"]');
 			
