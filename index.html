@@ -1037,7 +1037,7 @@
         function importManMarkingHs(id) {
             var series = chart.get('player-' + id);
             if (!series) return;
-            var hsValue = Math.max.apply(null, series.yData); // Max of all skills
+            var hsValue = Math.max(series.yData[2], series.yData[3], series.yData[4], series.yData[5]); // Max of Playmaker, Passing, Winger, Scorer
             $('#mm-hs-input').val(hsValue.toFixed(1));
             $('#mm-hs-slider').val(hsValue);
             
