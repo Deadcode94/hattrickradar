@@ -458,6 +458,117 @@
         </div>
     </div>
 
+    <!-- Man Marking Calculator -->
+    <div class="container-fluid" style="padding: 0 5%; margin-top: 40px; margin-bottom: 20px;" id="man-marking-section">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h2>Man Marking Calculator</h2>
+                <hr style="border-color: var(--border-color); width: 100px; margin: 20px auto;">
+            </div>
+        </div>
+        <div class="row" style="display: flex; flex-wrap: wrap; align-items: stretch;">
+            <!-- Settings -->
+            <div class="col-md-7 col-lg-8">
+                <div class="player-card" style="height: 100%;">
+                    <h4>Impostazioni Marcatura</h4>
+                    <hr style="border-color: var(--border-color);">
+
+                    <div class="skill-row">
+                        <label style="width: 30%">Defending of your player:</label>
+                        <div class="slider-container" style="width: 35%">
+                            <input type="range" class="native-slider" id="mm-def-slider" min="1" max="20" step="0.1"
+                                value="10">
+                        </div>
+                        <div class="input-container" style="width: 15%">
+                            <input type="number" class="skill-input" id="mm-def-input" min="1" max="20" step="0.1"
+                                value="10.0" onfocus="this.select()">
+                        </div>
+                        <div style="width: 20%; text-align: right;">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-xs dropdown-toggle"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                    style="background: var(--panel-bg); color: var(--text-color); border-color: var(--border-color);">
+                                    Importa <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right" id="mm-def-import-list">
+                                    <!-- Populated dynamically -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="skill-row" style="margin-top: 20px;">
+                        <label style="width: 30%">Highest skill of marked player:</label>
+                        <div class="slider-container" style="width: 35%">
+                            <input type="range" class="native-slider" id="mm-hs-slider" min="1" max="20" step="0.1"
+                                value="10">
+                        </div>
+                        <div class="input-container" style="width: 15%">
+                            <input type="number" class="skill-input" id="mm-hs-input" min="1" max="20" step="0.1"
+                                value="10.0" onfocus="this.select()">
+                        </div>
+                        <div style="width: 20%; text-align: right;">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-xs dropdown-toggle"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                    style="background: var(--panel-bg); color: var(--text-color); border-color: var(--border-color);">
+                                    Importa <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right" id="mm-hs-import-list">
+                                    <!-- Populated dynamically -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr style="border-color: var(--border-color); margin-top: 25px;">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h5>Your player is:</h5>
+                            <div class="checkbox">
+                                <label><input type="checkbox" id="mm-powerful"> <strong>Powerful</strong></label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" id="mm-specless"> <strong>Specless</strong></label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <h5>Marked player is:</h5>
+                            <div class="checkbox">
+                                <label><input type="checkbox" id="mm-technical"> <strong>Technical</strong></label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" id="mm-unpredictable">
+                                    <strong>Unpredictable</strong></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div class="col-md-5 col-lg-4">
+                <div class="player-card"
+                    style="text-align: center; height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                    <h3 style="margin-top: 0; color: #d9534f;">Penalty</h3>
+                    <div style="font-size: 48px; font-weight: bold; margin-bottom: 10px;" id="mm-penalty-result">50.0%
+                    </div>
+                    <div style="font-size: 14px; opacity: 0.7; margin-bottom: 20px;">
+                        <span id="mm-formula-def">10.0</span><sup>3.5</sup> / (<span
+                            id="mm-formula-def2">10.0</span><sup>3.5</sup> + <span
+                            id="mm-formula-hs">10.0</span><sup>3.5</sup>)
+                    </div>
+
+                    <hr style="border-color: var(--border-color); width: 80%; margin: 20px auto;">
+
+                    <h4 style="margin-bottom: 5px;">Marked player performance</h4>
+                    <div style="font-size: 32px; font-weight: bold; color: #277F31;" id="mm-performance-result">5.0
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="footer-bottom-area mt-5" style="padding: 30px 0;">
         <div class="container">
             <div class="row">
@@ -486,7 +597,8 @@
                             href="mailto:secondodevita@gmail.com">Email</a> | <a href="https://twitter.com/giupino"
                             target="_blank">Twitter</a></p>
                     <p style="font-size: 14px; opacity: 0.8;">MarGar: <a href="mailto:margar1994@gmail.com">Email</a> |
-                        <a href="https://www.linkedin.com/in/martina-garofalo1994" target="_blank">LinkedIn</a></p>
+                        <a href="https://www.linkedin.com/in/martina-garofalo1994" target="_blank">LinkedIn</a>
+                    </p>
                 </div>
             </div>
         </div>
@@ -639,6 +751,8 @@
             if (activePlayers.length >= 6) {
                 $("#add-player-btn").hide();
             }
+
+            updateManMarkingImportLists();
         }
 
         function removePlayer(id) {
@@ -647,6 +761,7 @@
             $("#player-card-" + id).remove();
             chart.get('player-' + id).remove();
             $("#add-player-btn").show();
+            updateManMarkingImportLists();
         }
 
         function attachSliderEvents(id) {
@@ -725,11 +840,137 @@
                 var name = $card.find('.player-name-input').val();
                 series.update({ name: name }, false);
                 chart.redraw();
+                updateManMarkingImportLists();
             }
+        }
+
+        function updateManMarkingImportLists() {
+            var defHtml = '';
+            var hsHtml = '';
+
+            activePlayers.forEach(function (id) {
+                var $card = $("#player-card-" + id);
+                var name = $card.find('.player-name-input').val() || ('Custom Player ' + id);
+
+                defHtml += '<li><a href="#" onclick="importManMarkingDef(' + id + '); return false;">' + name + '</a></li>';
+                hsHtml += '<li><a href="#" onclick="importManMarkingHs(' + id + '); return false;">' + name + '</a></li>';
+            });
+
+            $('#mm-def-import-list').html(defHtml || '<li><a href="#">No players</a></li>');
+            $('#mm-hs-import-list').html(hsHtml || '<li><a href="#">No players</a></li>');
+        }
+
+        function importManMarkingDef(id) {
+            var series = chart.get('player-' + id);
+            if (!series) return;
+            var defValue = series.yData[1]; // Index 1 is Defender
+            $('#mm-def-input').val(defValue.toFixed(1));
+            $('#mm-def-slider').val(defValue);
+            calcManMarking();
+        }
+
+        function importManMarkingHs(id) {
+            var series = chart.get('player-' + id);
+            if (!series) return;
+            var hsValue = Math.max.apply(null, series.yData); // Max of all skills
+            $('#mm-hs-input').val(hsValue.toFixed(1));
+            $('#mm-hs-slider').val(hsValue);
+            calcManMarking();
+        }
+
+        function calcManMarking() {
+            var pow = Math.pow;
+            var defVal = parseFloat($('#mm-def-input').val()) || 1;
+            var hsVal = parseFloat($('#mm-hs-input').val()) || 1;
+
+            var boost = $('#mm-specless').is(':checked') ? 1.05 : ($('#mm-powerful').is(':checked') ? 1.1 : 1);
+            var deviation = $('#mm-technical').is(':checked') ? 0.1 : ($('#mm-unpredictable').is(':checked') ? -0.1 : 0);
+
+            var rawPenalty = pow(defVal * boost, 3.5) / (pow(defVal * boost, 3.5) + pow(hsVal, 3.5)) + deviation;
+            var penalty = Math.max(0, Math.min(1, rawPenalty)); // clamp to 0-100% just in case
+
+            var performance = hsVal * (1 - penalty);
+
+            $('#mm-formula-def').text((defVal * boost).toFixed(1));
+            $('#mm-formula-def2').text((defVal * boost).toFixed(1));
+            $('#mm-formula-hs').text(hsVal.toFixed(1));
+
+            $('#mm-penalty-result').text((penalty * 100).toFixed(1) + '%');
+            $('#mm-performance-result').text(performance.toFixed(1));
         }
 
         $(document).ready(function () {
             initApp();
+
+            // Initialize Man Marking Calculator
+            calcManMarking();
+
+            // Checkbox logic for Man Marking
+            $('#mm-powerful').on('change', function () {
+                if ($(this).is(':checked')) $('#mm-specless').prop('checked', false);
+                calcManMarking();
+            });
+            $('#mm-specless').on('change', function () {
+                if ($(this).is(':checked')) $('#mm-powerful').prop('checked', false);
+                calcManMarking();
+            });
+            $('#mm-technical').on('change', function () {
+                if ($(this).is(':checked')) $('#mm-unpredictable').prop('checked', false);
+                calcManMarking();
+            });
+            $('#mm-unpredictable').on('change', function () {
+                if ($(this).is(':checked')) $('#mm-technical').prop('checked', false);
+                calcManMarking();
+            });
+
+            // Slider and Input sync for Man Marking
+            var isUpdatingMMSlider = false;
+
+            $('#mm-def-slider').on('input', function () {
+                if (isUpdatingMMSlider) return;
+                var val = parseFloat($(this).val());
+                
+                // Force 0.5 step on drag
+                val = Math.round(val * 2) / 2;
+                $(this).val(val);
+                
+                $('#mm-def-input').val(val.toFixed(1));
+                calcManMarking();
+            });
+
+            $('#mm-hs-slider').on('input', function () {
+                if (isUpdatingMMSlider) return;
+                var val = parseFloat($(this).val());
+                
+                // Force 0.5 step on drag
+                val = Math.round(val * 2) / 2;
+                $(this).val(val);
+                
+                $('#mm-hs-input').val(val.toFixed(1));
+                calcManMarking();
+            });
+
+            $('#mm-def-input').on('input change', function () {
+                var val = parseFloat($(this).val());
+                if (isNaN(val)) return;
+                var clampedVal = Math.max(1, Math.min(20, val));
+                if (val !== clampedVal) $(this).val(clampedVal.toFixed(1));
+                isUpdatingMMSlider = true;
+                $('#mm-def-slider').val(clampedVal);
+                isUpdatingMMSlider = false;
+                calcManMarking();
+            });
+
+            $('#mm-hs-input').on('input change', function () {
+                var val = parseFloat($(this).val());
+                if (isNaN(val)) return;
+                var clampedVal = Math.max(1, Math.min(20, val));
+                if (val !== clampedVal) $(this).val(clampedVal.toFixed(1));
+                isUpdatingMMSlider = true;
+                $('#mm-hs-slider').val(clampedVal);
+                isUpdatingMMSlider = false;
+                calcManMarking();
+            });
         });
     </script>
 </body>
