@@ -29,41 +29,203 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+	<script>
+		var urlParams = new URLSearchParams(window.location.search);
+		var urlTheme = urlParams.get('theme');
+		if (urlTheme) {
+			localStorage.setItem('theme', urlTheme);
+			if (window.history.replaceState) {
+				window.history.replaceState(null, '', window.location.pathname);
+			}
+		}
+		var savedTheme = localStorage.getItem('theme');
+		if (savedTheme) {
+			document.documentElement.setAttribute('data-theme', savedTheme);
+		}
+	</script>
+	<style>
+		:root {
+			--bg-color: #ffffff;
+			--text-color: #333333;
+			--panel-bg: #ffffff;
+			--border-color: #e5e5e5;
+			--chart-bg: #ffffff;
+			--chart-text: #333333;
+			--chart-grid: #e6e6e6;
+		}
+		html[data-theme="dark"] {
+			--bg-color: #121212;
+			--text-color: #e0e0e0;
+			--panel-bg: #1e1e1e;
+			--border-color: #333333;
+			--chart-bg: #1e1e1e;
+			--chart-text: #e0e0e0;
+			--chart-grid: #444444;
+		}
+		body {
+			background-color: var(--bg-color);
+			color: var(--text-color);
+			transition: background-color 0.3s, color 0.3s;
+		}
+		.footer-bottom-area {
+			background-color: var(--panel-bg) !important;
+			border-color: var(--border-color) !important;
+			color: var(--text-color);
+		}
+		.nav.navbar-nav a {
+			color: var(--text-color) !important;
+		}
+		
+		/* Premium UI/UX Header */
+		.custom-navbar {
+			background: #ffffff;
+			border: none;
+			border-bottom: 1px solid var(--border-color);
+			box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+			margin-bottom: 30px;
+			padding: 10px 0;
+			transition: all 0.3s ease;
+		}
+		html[data-theme="dark"] .custom-navbar {
+			background: #1c1c1c;
+			box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+			border-bottom: 1px solid #333333;
+		}
+		
+		/* Logo Styling */
+		.custom-navbar .logo {
+			padding-top: 5px;
+			padding-bottom: 5px;
+			height: auto;
+		}
+		.custom-navbar .logo h1 {
+			margin: 0 !important;
+			font-size: 32px;
+			font-weight: 700;
+			letter-spacing: -0.5px;
+			line-height: 1;
+		}
+		.custom-navbar .logo h1 a {
+			color: #333333 !important;
+			text-decoration: none;
+			transition: color 0.3s;
+		}
+		html[data-theme="dark"] .custom-navbar .logo h1 a {
+			color: #ffffff !important;
+		}
+		.custom-navbar .logo h1 span {
+			color: #277F31;
+		}
+		html[data-theme="dark"] .custom-navbar .logo h1 span {
+			color: #3dc6ab;
+		}
+		
+		/* Nav Links Styling */
+		.custom-navbar .navbar-nav > li > a {
+			color: #666666 !important;
+			font-weight: 600;
+			font-size: 16px;
+			padding: 15px 20px !important;
+			transition: color 0.2s ease;
+		}
+		html[data-theme="dark"] .custom-navbar .navbar-nav > li > a {
+			color: #aaaaaa !important;
+		}
+		
+		.custom-navbar .navbar-nav > li > a:hover {
+			color: #277F31 !important;
+			background: transparent !important;
+		}
+		html[data-theme="dark"] .custom-navbar .navbar-nav > li > a:hover {
+			color: #ffffff !important;
+			background: transparent !important;
+		}
+		
+		/* Active State with clean underline indicator */
+		.custom-navbar .navbar-nav > li.active > a {
+			color: #277F31 !important;
+			background: transparent !important;
+			position: relative;
+		}
+		html[data-theme="dark"] .custom-navbar .navbar-nav > li.active > a {
+			color: #3dc6ab !important;
+			background: transparent !important;
+		}
+		.custom-navbar .navbar-nav > li.active > a::after {
+			content: '';
+			position: absolute;
+			bottom: 5px;
+			left: 20px;
+			right: 20px;
+			height: 3px;
+			background: #277F31;
+			border-radius: 3px;
+		}
+		html[data-theme="dark"] .custom-navbar .navbar-nav > li.active > a::after {
+			background: #3dc6ab;
+		}
+		
+		/* Theme Toggle Button - Modern Pill */
+		.custom-navbar .navbar-right {
+			margin-top: 5px;
+		}
+		#theme-toggle-btn {
+			background: #f0f0f0 !important;
+			color: #333 !important;
+			border-radius: 20px;
+			padding: 8px 18px !important;
+			margin-left: 15px;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+			transition: all 0.2s ease;
+		}
+		#theme-toggle-btn:hover {
+			background: #e4e4e4 !important;
+			transform: translateY(-2px);
+			box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+		}
+		html[data-theme="dark"] #theme-toggle-btn {
+			background: #2a2a2a !important;
+			color: #ffc808 !important;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+		}
+		html[data-theme="dark"] #theme-toggle-btn:hover {
+			background: #333333 !important;
+			color: #ffffff !important;
+			box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+		}
+		
+		/* Mobile Toggle Icon */
+		.custom-navbar .navbar-toggle .icon-bar { background-color: #333; }
+		html[data-theme="dark"] .custom-navbar .navbar-toggle .icon-bar { background-color: #fff; }
+		.custom-navbar .navbar-toggle { border: none; margin-top: 10px; }
+		.custom-navbar .navbar-toggle:hover { background: transparent !important; }
+	</style>
   </head>
   <body>
    
-    <div class="site-branding-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="logo">
-                        <h1><a href="index.html">HT<span>Radar</span></a></h1>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> <!-- End site branding area -->
-    
-    <div class="mainmenu-area">
-        <div class="container">
-            <div class="row">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div> 
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a href="index.html">Home</a></li>
-                        <li class="active"><a href="contact.html">Contact</a></li>
-                    </ul>
-                </div>  
-            </div>
-        </div>
-    </div> <!-- End mainmenu area -->
+	<nav class="navbar custom-navbar">
+	  <div class="container-fluid" style="padding: 0 5%;">
+		<div class="navbar-header">
+		  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		  </button>
+		  <a class="navbar-brand logo" href="index.html"><h1>HT<span>Radar</span></h1></a>
+		</div>
+
+		<div class="navbar-collapse collapse">
+		  <ul class="nav navbar-nav">
+			<li><a href="index.html">Home</a></li>
+			<li class="active"><a href="contact.html">Contact</a></li>
+		  </ul>
+		  <ul class="nav navbar-nav navbar-right">
+			<li><a href="#" id="theme-toggle-btn" onclick="toggleDarkMode(); return false;"><i class="fa fa-moon-o"></i> Dark Mode</a></li>
+		  </ul>
+		</div>
+	  </div>
+	</nav>
     
     <div class="container">
 		<div class="row">
@@ -159,5 +321,39 @@
     
     <!-- Main Script -->
     <script src="js/main.js"></script>
+	<script>
+	function toggleDarkMode() {
+		var htmlEl = document.documentElement;
+		var btn = document.getElementById('theme-toggle-btn');
+		if (htmlEl.getAttribute('data-theme') === 'dark') {
+			htmlEl.setAttribute('data-theme', 'light');
+			localStorage.setItem('theme', 'light');
+			if (btn) btn.innerHTML = '<i class="fa fa-moon-o"></i> Dark Mode';
+		} else {
+			htmlEl.setAttribute('data-theme', 'dark');
+			localStorage.setItem('theme', 'dark');
+			if (btn) btn.innerHTML = '<i class="fa fa-sun-o"></i> Light Mode';
+		}
+	}
+	
+	document.addEventListener("DOMContentLoaded", function() {
+		var btn = document.getElementById('theme-toggle-btn');
+		if (document.documentElement.getAttribute('data-theme') === 'dark') {
+			if (btn) btn.innerHTML = '<i class="fa fa-sun-o"></i> Light Mode';
+		}
+		
+		// Append theme to local links for file:/// protocol support
+		var links = document.querySelectorAll('a[href="index.html"], a[href="contact.html"]');
+		links.forEach(function(link) {
+			link.addEventListener('click', function(e) {
+				var currentTheme = document.documentElement.getAttribute('data-theme');
+				if (currentTheme) {
+					e.preventDefault();
+					window.location.href = this.getAttribute('href') + '?theme=' + currentTheme;
+				}
+			});
+		});
+	});
+	</script>
   </body>
 </html>

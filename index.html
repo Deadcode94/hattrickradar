@@ -26,6 +26,22 @@
 	<!-- Select CSS -->
 	<link rel="stylesheet" href="utils/bootstrap-select.min.css"></link>
 
+	<script>
+		var urlParams = new URLSearchParams(window.location.search);
+		var urlTheme = urlParams.get('theme');
+		if (urlTheme) {
+			localStorage.setItem('theme', urlTheme);
+			// Clean up the URL
+			if (window.history.replaceState) {
+				window.history.replaceState(null, '', window.location.pathname);
+			}
+		}
+		var savedTheme = localStorage.getItem('theme');
+		if (savedTheme) {
+			document.documentElement.setAttribute('data-theme', savedTheme);
+		}
+	</script>
+
 	<style>
 		:root {
 			--bg-color: #ffffff;
@@ -448,6 +464,26 @@
 
 	function initApp() {
 		chart = Highcharts.chart('container', radarOptions);
+		
+		// Setup initial UI state for theme
+		var btn = document.getElementById('theme-toggle-btn');
+		if (document.documentElement.getAttribute('data-theme') === 'dark') {
+			if (btn) btn.innerHTML = '<i class="fa fa-sun-o"></i> Light Mode';
+			updateChartTheme();
+		}
+		
+		// Append theme to local links for file:/// protocol support
+		var links = document.querySelectorAll('a[href="index.html"], a[href="contact.html"]');
+		links.forEach(function(link) {
+			link.addEventListener('click', function(e) {
+				var currentTheme = document.documentElement.getAttribute('data-theme');
+				if (currentTheme) {
+					e.preventDefault();
+					window.location.href = this.getAttribute('href') + '?theme=' + currentTheme;
+				}
+			});
+		});
+		
 		addPlayer(); // Add Player 1
 		addPlayer(); // Add Player 2
 	}
@@ -457,9 +493,11 @@
 		var btn = document.getElementById('theme-toggle-btn');
 		if (htmlEl.getAttribute('data-theme') === 'dark') {
 			htmlEl.setAttribute('data-theme', 'light');
+			localStorage.setItem('theme', 'light');
 			if (btn) btn.innerHTML = '<i class="fa fa-moon-o"></i> Dark Mode';
 		} else {
 			htmlEl.setAttribute('data-theme', 'dark');
+			localStorage.setItem('theme', 'dark');
 			if (btn) btn.innerHTML = '<i class="fa fa-sun-o"></i> Light Mode';
 		}
 		updateChartTheme();
