@@ -120,6 +120,27 @@
 		html[data-theme="dark"] input[type=range].native-slider::-webkit-slider-runnable-track {
 			background: #555555;
 		}
+
+		/* Firefox specific styles */
+		input[type=range].native-slider::-moz-range-thumb {
+			height: 18px;
+			width: 18px;
+			border: none;
+			border-radius: 50%;
+			background: var(--player-color, #337ab7);
+			cursor: pointer;
+			box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+		}
+		input[type=range].native-slider::-moz-range-track {
+			width: 100%;
+			height: 4px;
+			cursor: pointer;
+			background: #cccccc;
+			border-radius: 2px;
+		}
+		html[data-theme="dark"] input[type=range].native-slider::-moz-range-track {
+			background: #555555;
+		}
 		
 		.mother-club-btn {
 			cursor: pointer;
