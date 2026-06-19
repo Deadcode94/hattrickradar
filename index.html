@@ -393,9 +393,6 @@
             padding: 20px;
             margin-bottom: 20px;
             border: 1px solid var(--border-color);
-            position: sticky;
-            top: 20px;
-            z-index: 1000;
         }
 
         .add-btn-wrapper {
@@ -438,14 +435,108 @@
         </div>
     </div>
 
-    <div class="container-fluid" style="padding: 0 5%;">
+    <div class="container-fluid" style="padding: 0 5%; margin-bottom: 60px;">
         <div class="row" style="display: flex; flex-wrap: wrap;">
             <!-- Chart on Left -->
             <div class="col-md-5 col-lg-4">
-                <div id="radarChart">
-                    <div id="container" style="height: 450px;"></div>
-                    <div class="text-center add-btn-wrapper" style="margin-top: 10px;">
-                        <button id="add-player-btn" class="btn btn-primary" onclick="addPlayer()">+ Add Player</button>
+                <div style="position: sticky; top: 20px; z-index: 1000;">
+                    <div id="radarChart">
+                        <div id="container" style="height: 380px;"></div>
+                        <div class="text-center add-btn-wrapper" style="margin-top: 10px;">
+                            <button id="add-player-btn" class="btn btn-primary" onclick="addPlayer()">+ Add
+                                Player</button>
+                        </div>
+                    </div>
+
+                    <!-- Man Marking Calculator -->
+                    <div class="player-card" id="man-marking-section" style="margin-bottom: 20px;">
+                        <h4 class="text-center" style="margin-top: 0; font-weight: bold;">Man Marking Calculator</h4>
+                        <hr style="border-color: var(--border-color);">
+
+                        <div class="skill-row" style="flex-wrap: wrap;">
+                            <label style="width: 100%; margin-bottom: 5px;">Defending of your player:</label>
+                            <div class="slider-container" style="width: 50%">
+                                <input type="range" class="native-slider" id="mm-def-slider" min="1" max="20" step="0.1"
+                                    value="10">
+                            </div>
+                            <div class="input-container" style="width: 25%">
+                                <input type="number" class="skill-input" id="mm-def-input" min="1" max="20" step="0.1"
+                                    value="10.0" onfocus="this.select()">
+                            </div>
+                            <div style="width: 25%; text-align: right;">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                        style="background: var(--panel-bg); color: var(--text-color); border-color: var(--border-color);">
+                                        Import <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-right" id="mm-def-import-list">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="skill-row" style="margin-top: 15px; flex-wrap: wrap;">
+                            <label style="width: 100%; margin-bottom: 5px;">Highest skill of marked player:</label>
+                            <div class="slider-container" style="width: 50%">
+                                <input type="range" class="native-slider" id="mm-hs-slider" min="1" max="20" step="0.1"
+                                    value="10">
+                            </div>
+                            <div class="input-container" style="width: 25%">
+                                <input type="number" class="skill-input" id="mm-hs-input" min="1" max="20" step="0.1"
+                                    value="10.0" onfocus="this.select()">
+                            </div>
+                            <div style="width: 25%; text-align: right;">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                        style="background: var(--panel-bg); color: var(--text-color); border-color: var(--border-color);">
+                                        Import <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-right" id="mm-hs-import-list">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr style="border-color: var(--border-color); margin-top: 15px;">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <h5>Your player:</h5>
+                                <div class="checkbox">
+                                    <label><input type="checkbox" id="mm-powerful"> <strong>Powerful</strong></label>
+                                </div>
+                                <div class="checkbox">
+                                    <label><input type="checkbox" id="mm-specless"> <strong>Specless</strong></label>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <h5>Marked player:</h5>
+                                <div class="checkbox">
+                                    <label><input type="checkbox" id="mm-technical"> <strong>Technical</strong></label>
+                                </div>
+                                <div class="checkbox">
+                                    <label><input type="checkbox" id="mm-unpredictable">
+                                        <strong>Unpredictable</strong></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr style="border-color: var(--border-color); margin-top: 15px;">
+
+                        <div class="row" style="text-align: center; display: flex; align-items: center;">
+                            <div class="col-xs-6">
+                                <h4 style="color: #d9534f; margin-top: 0px; margin-bottom: 2px; font-size: 16px;">
+                                    Penalty</h4>
+                                <div style="font-size: 30px; font-weight: bold; line-height: 1;" id="mm-penalty-result">
+                                    50.00%</div>
+                            </div>
+                            <div class="col-xs-6" style="border-left: 1px solid var(--border-color);">
+                                <h5 style="margin-top: 0px; margin-bottom: 2px; font-size: 14px;">Marked skill</h5>
+                                <div style="font-size: 26px; font-weight: bold; color: #277F31; line-height: 1.1;"
+                                    id="mm-performance-result">5.00</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -458,116 +549,7 @@
         </div>
     </div>
 
-    <!-- Man Marking Calculator -->
-    <div class="container-fluid" style="padding: 0 5%; margin-top: 40px; margin-bottom: 20px;" id="man-marking-section">
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <h2>Man Marking Calculator</h2>
-                <hr style="border-color: var(--border-color); width: 100px; margin: 20px auto;">
-            </div>
-        </div>
-        <div class="row" style="display: flex; flex-wrap: wrap; align-items: stretch;">
-            <!-- Settings -->
-            <div class="col-md-7 col-lg-8">
-                <div class="player-card" style="height: 100%;">
-                    <h4>Impostazioni Marcatura</h4>
-                    <hr style="border-color: var(--border-color);">
 
-                    <div class="skill-row">
-                        <label style="width: 30%">Defending of your player:</label>
-                        <div class="slider-container" style="width: 35%">
-                            <input type="range" class="native-slider" id="mm-def-slider" min="1" max="20" step="0.1"
-                                value="10">
-                        </div>
-                        <div class="input-container" style="width: 15%">
-                            <input type="number" class="skill-input" id="mm-def-input" min="1" max="20" step="0.1"
-                                value="10.0" onfocus="this.select()">
-                        </div>
-                        <div style="width: 20%; text-align: right;">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default btn-xs dropdown-toggle"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                    style="background: var(--panel-bg); color: var(--text-color); border-color: var(--border-color);">
-                                    Importa <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-right" id="mm-def-import-list">
-                                    <!-- Populated dynamically -->
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="skill-row" style="margin-top: 20px;">
-                        <label style="width: 30%">Highest skill of marked player:</label>
-                        <div class="slider-container" style="width: 35%">
-                            <input type="range" class="native-slider" id="mm-hs-slider" min="1" max="20" step="0.1"
-                                value="10">
-                        </div>
-                        <div class="input-container" style="width: 15%">
-                            <input type="number" class="skill-input" id="mm-hs-input" min="1" max="20" step="0.1"
-                                value="10.0" onfocus="this.select()">
-                        </div>
-                        <div style="width: 20%; text-align: right;">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default btn-xs dropdown-toggle"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                    style="background: var(--panel-bg); color: var(--text-color); border-color: var(--border-color);">
-                                    Importa <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-right" id="mm-hs-import-list">
-                                    <!-- Populated dynamically -->
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr style="border-color: var(--border-color); margin-top: 25px;">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h5>Your player is:</h5>
-                            <div class="checkbox">
-                                <label><input type="checkbox" id="mm-powerful"> <strong>Powerful</strong></label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" id="mm-specless"> <strong>Specless</strong></label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <h5>Marked player is:</h5>
-                            <div class="checkbox">
-                                <label><input type="checkbox" id="mm-technical"> <strong>Technical</strong></label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" id="mm-unpredictable">
-                                    <strong>Unpredictable</strong></label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Results -->
-            <div class="col-md-5 col-lg-4">
-                <div class="player-card"
-                    style="text-align: center; height: 100%; display: flex; flex-direction: column; justify-content: center;">
-                    <h3 style="margin-top: 0; color: #d9534f;">Penalty</h3>
-                    <div style="font-size: 48px; font-weight: bold; margin-bottom: 10px;" id="mm-penalty-result">50.0%
-                    </div>
-                    <div style="font-size: 14px; opacity: 0.7; margin-bottom: 20px;">
-                        <span id="mm-formula-def">10.0</span><sup>3.5</sup> / (<span
-                            id="mm-formula-def2">10.0</span><sup>3.5</sup> + <span
-                            id="mm-formula-hs">10.0</span><sup>3.5</sup>)
-                    </div>
-
-                    <hr style="border-color: var(--border-color); width: 80%; margin: 20px auto;">
-
-                    <h4 style="margin-bottom: 5px;">Marked player skill</h4>
-                    <div style="font-size: 32px; font-weight: bold; color: #277F31;" id="mm-performance-result">5.0
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="footer-bottom-area mt-5" style="padding: 30px 0;">
         <div class="container">
@@ -899,10 +881,6 @@
             var penalty = Math.max(0, Math.min(1, rawPenalty)); // clamp to 0-100% just in case
 
             var performance = hsVal * (1 - penalty);
-
-            $('#mm-formula-def').text(effectiveDef.toFixed(1));
-            $('#mm-formula-def2').text(effectiveDef.toFixed(1));
-            $('#mm-formula-hs').text(effectiveHs.toFixed(1));
 
             $('#mm-penalty-result').text((penalty * 100).toFixed(2) + '%');
             $('#mm-performance-result').text(performance.toFixed(2));
