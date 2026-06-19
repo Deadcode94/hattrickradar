@@ -1,7 +1,3 @@
-<?php
-	session_start();
-	include_once("analyticstracking.php");
-?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -10,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Hattrick Radar</title>
     
-	  
     <!-- Google Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>
@@ -29,7 +24,6 @@
 	<link rel="icon" href="img/favicon.ico" type="image/x-icon"/>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -41,7 +35,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="logo">
-                        <h1><a href="index.php">HT<span>Radar</span></a></h1>
+                        <h1><a href="index.html">HT<span>Radar</span></a></h1>
                     </div>
                 </div>
             </div>
@@ -61,19 +55,8 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="index.php">Home</a></li>
-                        <li class="active"><a href="radar.php">Compare players</a></li>
-
-                        <?php
-                        if(!isset($_SESSION['HT'])){
-                        	echo '<li><a href="login.php">Login</a></li>';
-                        } else {
-                        	echo '<li><a href="logout.php">Logout</a></li>';
-                        }
-
-                        ?>
-
-                        <li><a href="contact.php">Contact</a></li>
+                        <li class="active"><a href="index.html">Home</a></li>
+                        <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </div>
             </div>
@@ -92,57 +75,6 @@
 		<div class="row">
 		  <div class="col-md-3" style="text-align:center">
 			 <br>
-			 <!--Manual-->
-			 <div class="radio">
-				 <label><input type="radio" name="optradio1" checked="checked" onchange="document.getElementById('teamCompare1').style.display='none';document.getElementById('player1boxteam').style.display='none';document.getElementById('player1box').style.display='block';document.getElementById('marketCompare1').style.display='none';document.getElementById('player1boxmarket').style.display='none';radio1 = 'manual';recomputeValue(1,'other');">Manual</label>
-			 </div>
-			 <!--Market-->
-			 <div class="radio">
-				 <label><input type="radio" name="optradio1" onchange="document.getElementById('teamCompare1').style.display='none';document.getElementById('player1boxselect').style.display='none';document.getElementById('marketCompare1').style.display='block';document.getElementById('player1box').style.display='none';document.getElementById('player1boxmarket').style.display='block';radio1 = 'market';recomputeValue(1,'other');">Market</label>
-			  </div>
-			  <!--Team-->
-			  <div class="radio">
-				 <label><input type="radio" name="optradio1" onchange="retrieveTeams(1);document.getElementById('marketCompare1').style.display='none';document.getElementById('teamCompare1').style.display='block';document.getElementById('player1boxselect').style.display='block';document.getElementById('player1box').style.display='none';document.getElementById('player1boxmarket').style.display='none';radio1 = 'select';recomputeValue(1,'other');">Team</label>
-			  </div>
-			 <br>
-			 
-			 <!--From Team-->
-			<div class="teamCompare1" id="teamCompare1" style="display:none">
-				<div class="form-group">
-					<label for="selectPlayer1">Teams</label>
-					<select class='selectpicker' id="selectPlayer1" data-live-search='true' title='Choose one player...' onchange='retrieveSelectPlayer(this,1);selectFirstRetrieve1=false'>
-					</select>
-				<!--	<span class="glyphicon glyphicon-play" aria-hidden="true" style="size:20px" onclick="retrieveMarketPlayer(1);marketFirstRetrieve1=false"></span>-->
-				</div>
-			</div>
-			
-			<div id="player1boxteam" style="display:none">
-			</div>			
-		
-			<!--From Market-->
-		   <div class="marketCompare1" id="marketCompare1" style="display:none">
-				<div class="form-group">
-					<label for="pID1">Player ID</label>
-					<input type="text" class="pID1" id="pID1" style="font-size: x-small"/>
-					<span class="glyphicon glyphicon-play" aria-hidden="true" style="size:20px" onclick="retrieveMarketPlayer(1);marketFirstRetrieve1=false"></span>
-				</div>
-			</div>
-			<br>
-			
-			
-			<div class='alert alert-danger fade in' id='danger-team-1'  style='display:none'>Error in retrieve teams.</div>
-			<div class='alert alert-danger fade in' id='danger-retrieve-1'  style='display:none'>You have to login for this feature.</div>
-			<div class='alert alert-danger fade in' id='danger-player-1'  style='display:none'>This player is not on market.</div>
-			<div class='alert alert-danger fade in' id='danger-format-1'  style='display:none'>No valid format.</div>
-			
-			<!--Team-->
-			<div id="player1boxselect" style="display:none">
-			</div>
-			
-			<!--Market 1-->
-			<div id="player1boxmarket" style="display:none">
-			</div>
-			
 			<!--Manual 1-->
 			<div class="form-group" id="player1box" class="manualCompare1">
 				<h2><span class='player1 manual' >Custom player 1</span></h2><br>
@@ -171,61 +103,8 @@
 		</div>
 		<!--end radar-->
 		
-		
 		<div class="col-md-3" style="text-align:center">
 		   <br>
-			<!--Manual-->
-			<div class="radio">
-				 <label><input type="radio" name="optradio2" checked="checked" onchange="document.getElementById('teamCompare2').style.display='none';document.getElementById('player2boxteam').style.display='none';document.getElementById('marketCompare2').style.display='none';document.getElementById('player2boxmarket').style.display='none';document.getElementById('playerbox2').style.display='block';radio2 = 'manual';recomputeValue(2,'other');">Manual</label>
-			 </div>
-			 <!--Market-->
-			 <div class="radio">
-				 <label><input type="radio" name="optradio2" onchange="document.getElementById('teamCompare2').style.display='none';document.getElementById('player2boxselect').style.display='none';document.getElementById('playerbox2').style.display='none';document.getElementById('player2boxmarket').style.display='block';document.getElementById('marketCompare2').style.display='block';radio2='market';recomputeValue(2,'other');">Market</label>
-			  </div>
-			  <!--Team-->
-			 <div class="radio">
-				 <label><input type="radio" name="optradio2" onchange="retrieveTeams(2);document.getElementById('marketCompare2').style.display='none';document.getElementById('teamCompare2').style.display='block';document.getElementById('player2boxselect').style.display='block';document.getElementById('playerbox2').style.display='none';document.getElementById('player2boxmarket').style.display='none';radio2 = 'select';recomputeValue(2,'other');">Team</label>
-			  </div>
-			  
-			  <br>
-			<!--From Team-->
-			<div class="teamCompare2" id="teamCompare2" style="display:none">
-				<div class="form-group">
-					<label for="selectPlayer2">Teams</label>
-					 <select class='selectpicker' id="selectPlayer2" data-live-search='true' title='Choose one player...' onchange='retrieveSelectPlayer(this,2);selectFirstRetrieve2=false'>
-					</select>
-				<!--	<span class="glyphicon glyphicon-play" aria-hidden="true" style="size:20px" onclick="retrieveMarketPlayer(1);marketFirstRetrieve1=false"></span>-->
-				</div>
-			</div>
-			
-			<!--From Market-->
-			<div class="bluePlayer">
-				<div class="marketCompare2 bluePlayer"id="marketCompare2"  style="display:none">
-					<div class="form-group">
-						<label for="pID2">Player ID</label>
-						<input type="text" class="pID2" id="pID2" style="font-size: x-small"/>
-						<span class="glyphicon glyphicon-play" aria-hidden="true" style="size:20px" onclick="retrieveMarketPlayer(2);marketFirstRetrieve2=false;"></span>
-					</div>
-				</div>
-				<div id="player2boxmarket" style="display:none">
-				</div>
-			</div>
-			
-			
-			<div class='alert alert-danger fade in' id='danger-team-2'  style='display:none'>Error in retrieve teams.</div>
-			<div class='alert alert-danger fade in' id='danger-retrieve-2'  style='display:none'>You have to login for this feature.</div>
-			<div class='alert alert-danger fade in' id='danger-player-2'  style='display:none'>This player is not on market.</div>
-			<div class='alert alert-danger fade in' id='danger-format-2'  style='display:none'>No valid format.</div>
-			
-			
-			<!--Team player 2-->
-			<div id="player2boxteam" style="display:none">
-			</div>
-			<br>
-			<div id="player2boxselect" style="display:none">
-			</div>
-			  
-			
 			<!--Manual 2-->			
 			<div class="form-group bluePlayer" id="playerbox2" class="manualCompare2">
 				<h2><span class='player2 manual' >Custom player 2</span></h2><br>
@@ -250,15 +129,12 @@
 	 </div><!--end row-->
   </div><!--end main container-->
     
-    
-   
-    
     <div class="footer-bottom-area">
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
                     <div class="copyright">
-                        <p>&copy; 2017 HTRadar. Coded with <i class="fa fa-heart"></i> by <a href="http://martinagarofalo.it" target="_blank">Martina Garofalo</a> e <a href="contact.php">Giuseppe Garofalo.</a></p>
+                        <p>&copy; 2017 HTRadar. Coded with <i class="fa fa-heart"></i> by <a href="http://martinagarofalo.it" target="_blank">Martina Garofalo</a> e <a href="contact.html">Giuseppe Garofalo.</a></p>
                     </div>
                 </div>                               
             </div>
@@ -287,20 +163,11 @@
 	<link rel="stylesheet" href="utils/bootstrap-select.min.css"></link>
 	<script src="utils/bootstrap-select.js"></script>
 	
-
-	
-	<!--Chart-->
-	<!--<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>-->
-	<!--<script src="https://code.highcharts.com/highcharts.js"></script>-->
-	<!--<script src="https://code.highcharts.com/highcharts-more.js"></script>-->
-	<!--<script src="https://code.highcharts.com/modules/exporting.js"></script>-->
-	
 	<!-- fix chart -->
 	<script src="js/highcharts.js"></script>
 	<script src="js/highcharts-more.js"></script>
 	<script src="js/modules/exporting.js"></script>
 	
-
   </body>
 </html>
 
@@ -365,14 +232,6 @@
 
 			};
 			
-	//util object to save recomputed value 
-	var radio1 = 'manual';
-	var radio2 = 'manual';
-
-	var marketFirstRetrieve1 = true;
-	var marketFirstRetrieve2 = true;
-	var selectFirstRetrieve1 = true;
-	var selectFirstRetrieve2 = true;
 
 	var radarSkill = {};
 	var utilSkill = ['Keeper','Defender','Playmaker','Passing','Winger','Scorer','SetPieces'];
@@ -392,15 +251,7 @@
 
 	function recomputeValue(player, skill){
 
-		//no player retrieved from market yet
-		if(eval('radio'+player)=='market'){
-			if(eval('marketFirstRetrieve'+player))
-				return;
-		}else if(eval('radio'+player)=='select'){
-				if(eval('selectFirstRetrieve'+player))
-					return;
-		}
-		var playerDetails = document.getElementsByClassName(eval('radio'+player)+""+player);
+		var playerDetails = document.getElementsByClassName('manual'+player);
 		if(playerDetails["motherClubBonus"+player].style.color == "rgb(179, 179, 179)")
 			motherClubBonus = 0;
 		else 
@@ -446,18 +297,8 @@
 		}
 		chart.series[player-1].setData(newArray, true);
 		
-		if(eval('radio'+player) == 'manual'){
-			chart.series[player-1].update({name:'Custom Player '+player}, false);
-			chart.redraw();
-		}else if(eval('radio'+player) == 'market'){
-			name = document.getElementsByClassName("market"+player)[0].innerHTML;
-			chart.series[player-1].update({name:name}, false);
-			chart.redraw();
-		}else if(eval('radio'+player) == 'select'){
-			name = document.getElementsByClassName("select"+player)[0].innerHTML;
-			chart.series[player-1].update({name:name}, false);
-			chart.redraw();
-		}
+        chart.series[player-1].update({name:'Custom Player '+player}, false);
+        chart.redraw();
 	}
 
 	function changeStyle(heart, player){
@@ -476,128 +317,4 @@
 		chart = Highcharts.chart('container', radarOptions);
 	}
 	
-	function showHideBox(checkbox, number){
-		box = document.getElementById("skillBox"+number+eval('radio'+number));
-				
-		if(checkbox.checked && box.style.display == "none")
-			box.style.display = "block"; 
-		else if(!checkbox.checked && box.style.display == "block")
-			box.style.display = "none";
-	}
-	
-	function retrieveMarketPlayer(playerNumber){
-		//user logged
-		if (document.cookie.length > 0){
-			var login = document.cookie.indexOf('htRadarOauthToken=');
-			if (login == -1){
-				document.getElementById("danger-retrieve-"+playerNumber).style.display = 'block';
-                setInterval(function(){ document.getElementById("danger-retrieve-"+playerNumber).style.display = 'none'; }, 5000);
-				return;
-			}
-		}
-		
-		var id = $("#pID"+playerNumber).val();
-        if($.isNumeric(id)){
-          $.ajax({
-            type: "POST",
-            url: 'retrievePlayer.php',
-			dataType: "xml",
-            data: {playerID: id, playerNum:playerNumber, option: 'market'}
-          }).done(function( a, e, o) {
-			  if(o.responseXML == null){
-				  
-				  document.getElementById("danger-player-"+playerNumber).style.display = 'block';
-				  setInterval(function(){ document.getElementById("danger-player-"+playerNumber).style.display = 'none'; }, 5000);
-				  return;
-			  }
-			  htmlBox = o.responseXML.getElementsByTagName("playerBox")[0].innerHTML;
-			  document.getElementById("player"+playerNumber+"boxmarket").innerHTML = htmlBox.substring(9, htmlBox.length-3);
-			  document.getElementById("player"+playerNumber+"boxmarket").style.display='block';
-			  
-			  $(".slidermarket"+playerNumber).slider({
-					formatter: function(value) {
-						return value;
-					}
-				});
-				
-				recomputeValue(playerNumber, 'other'); 
-            }).error(function(err){
-				console.log(err);
-				  document.getElementById("danger-player-"+playerNumber).style.display = 'block';
-				  setInterval(function(){ document.getElementById("danger-player-"+playerNumber).style.display = 'none'; }, 5000);
-				  return;
-			});
-		}else{
-			document.getElementById("danger-format-"+playerNumber).style.display = 'block';
-			setInterval(function(){ document.getElementById("danger-format-"+playerNumber).style.display = 'none'; }, 5000);
-			return;
-		}
-	}	
-	
-	function retrieveTeams(player){
-		
-		$.ajax({
-            type: "POST",
-            url: 'retrieveTeams.php'
-          }).done(function( a, e, o) {
-			  if(o.responseText == null){
-				  document.getElementById("danger-team-"+player).style.display = 'block';
-				  setInterval(function(){ document.getElementById("danger-team-"+player).style.display = 'none'; }, 5000);
-				  return;
-			  }
-			  document.getElementById("selectPlayer"+player).innerHTML = o.responseText;
-			  $('#selectPlayer'+player).selectpicker('refresh');
-
-            }).error(function(err){
-				console.log(err.responseText);
-				console.log(err);
-				  document.getElementById("danger-team-"+player).style.display = 'block';
-				  setInterval(function(){ document.getElementById("danger-team-"+player).style.display = 'none'; }, 5000);
-				  return;
-			});
-	}
-	
-	function retrieveSelectPlayer(sel, player){
-		
-		if (document.cookie.length > 0){
-			var login = document.cookie.indexOf('htRadarOauthToken=');
-			if (login == -1){
-				document.getElementById("danger-retrieve-"+playerNumber).style.display = 'block';
-                setInterval(function(){ document.getElementById("danger-retrieve-"+playerNumber).style.display = 'none'; }, 5000);
-				return;
-			}
-		}
-		
-		selectedOption = sel.options.item(sel.selectedIndex);
-		id = selectedOption.getAttribute("data-id");
-		
-		$.ajax({
-            type: "POST",
-            url: 'retrievePlayer.php',
-			dataType: "xml",
-            data: {playerID: id, playerNum:player, option: 'select'}
-          }).done(function( a, e, o) {
-			  if(o.responseXML == null){
-				  document.getElementById("danger-team-"+player).style.display = 'block';
-				  setInterval(function(){ document.getElementById("danger-team-"+player).style.display = 'none'; }, 5000);
-				  return;
-			  }
-			  htmlBox = o.responseXML.getElementsByTagName("playerBox")[0].innerHTML;
-			  document.getElementById("player"+player+"boxselect").innerHTML = htmlBox.substring(9, htmlBox.length-3);
-			  document.getElementById("player"+player+"boxselect").style.display='block';
-			  
-			  $(".sliderselect"+player).slider({
-					formatter: function(value) {
-						return value;
-					}
-				});
-				
-				recomputeValue(player, 'other'); 
-            }).error(function(err){
-				  document.getElementById("danger-team-"+player).style.display = 'block';
-				  setInterval(function(){ document.getElementById("danger-team-"+player).style.display = 'none'; }, 5000);
-				  return;
-			});
-	}
-
 </script>
