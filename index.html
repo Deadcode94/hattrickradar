@@ -644,8 +644,8 @@
                     <p style="font-size: 14px; opacity: 0.8;">A tool for Hattrick players to visually compare players
                         using radar charts.</p>
                     <p style="font-size: 14px; opacity: 0.8;">&copy; 2017. Coded with <i class="fa fa-heart"
-                            style="color: #d9534f;"></i> by <a href="http://martinagarofalo.it"
-                            target="_blank">MarGar</a> & <a href="https://twitter.com/giupino"
+                            style="color: #d9534f;"></i> by <a href="https://github.com/margar94"
+                            target="_blank">MarGar</a> & <a href="https://github.com/giupino82"
                             target="_blank">Giupino</a>.</p>
                 </div>
                 <div class="col-md-4">
@@ -655,16 +655,23 @@
                     <p style="font-size: 14px; opacity: 0.8;"><a href="https://github.com/jetwitaussi/PHT"
                             target="_blank">PHT</a> from <a href="https://www.hattrick.org/Club/Manager/?userId=653581"
                             target="_blank">teles</a></p>
-                    <p style="font-size: 14px; opacity: 0.8;">Source code on <a
+                    <p style="font-size: 14px; opacity: 0.8;">Original source code on <a
                             href="https://github.com/giupino82/hattrickradar" target="_blank">GitHub</a></p>
+                    <p style="font-size: 14px; opacity: 0.8;">Forked by <a
+                            href="https://www.hattrick.org/it/Club/Manager/?userId=11661908"
+                            target="_blank">Deadcode94</a> on
+                        <a href="https://github.com/Deadcode94/hattrickradar" target="_blank">GitHub</a>
+                    </p>
                 </div>
                 <div class="col-md-4">
                     <h4 style="margin-bottom: 15px;">Contacts</h4>
                     <p style="font-size: 14px; opacity: 0.8;">Giupino: <a
                             href="mailto:secondodevita@gmail.com">Email</a> | <a href="https://twitter.com/giupino"
-                            target="_blank">Twitter</a></p>
+                            target="_blank">Twitter</a> | <a
+                            href="https://www.hattrick.org/Club/Manager/?userId=10376800" target="_blank">Hattrick</a>
+                    </p>
                     <p style="font-size: 14px; opacity: 0.8;">MarGar: <a href="mailto:margar1994@gmail.com">Email</a> |
-                        <a href="https://www.linkedin.com/in/martina-garofalo1994" target="_blank">LinkedIn</a>
+                        <a href="http://martinagarofalo.it/" target="_blank">Website</a>
                     </p>
                 </div>
             </div>
@@ -1025,7 +1032,7 @@
             var defValue = series.yData[1]; // Index 1 is Defender
             $('#mm-def-input').val(defValue.toFixed(1));
             $('#mm-def-slider').val(defValue);
-            
+
             var spec = $('#player-card-' + id).find('.specialty-select').val();
             $('#mm-powerful, #mm-specless').prop('checked', false);
             if (spec === 'none') {
@@ -1033,7 +1040,7 @@
             } else if (spec === 'powerful') {
                 $('#mm-powerful').prop('checked', true);
             }
-            
+
             calcManMarking();
         }
 
@@ -1043,7 +1050,7 @@
             var hsValue = Math.max(series.yData[2], series.yData[3], series.yData[4], series.yData[5]); // Max of Playmaker, Passing, Winger, Scorer
             $('#mm-hs-input').val(hsValue.toFixed(1));
             $('#mm-hs-slider').val(hsValue);
-            
+
             var spec = $('#player-card-' + id).find('.specialty-select').val();
             $('#mm-technical, #mm-unpredictable').prop('checked', false);
             if (spec === 'technical') {
@@ -1051,7 +1058,7 @@
             } else if (spec === 'unpredictable') {
                 $('#mm-unpredictable').prop('checked', true);
             }
-            
+
             calcManMarking();
         }
 
