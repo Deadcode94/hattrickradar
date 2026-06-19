@@ -1,6 +1,6 @@
 # HTRadar
 
-[HTRadar](https://deadcode94.github.io/hattrickradar/)is a visual tool designed for [Hattrick](https://www.hattrick.org) managers to easily compare up to 6 players simultaneously using dynamic radar charts, and to calculate Man Marking performance penalties with the corresponding calculator.
+[HT Radar](https://deadcode94.github.io/hattrickradar/) is a visual tool designed for [Hattrick](https://www.hattrick.org) managers to easily compare up to 6 players simultaneously using dynamic radar charts, and to calculate Man Marking performance penalties with the corresponding calculator.
 
 *Note: The original project (now offline) included a CHPP integration feature to fetch data directly from Hattrick. This feature is not functional and has been disabled in this fork to focus on a lightweight, standalone experience.*
 
