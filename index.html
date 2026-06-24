@@ -726,7 +726,12 @@
 
         var activePlayers = [];
         var nextPlayerId = 1;
-        var playerColors = ['#277f31', '#149bdf', '#d9534f', '#f0ad4e', '#5bc0de', '#9b59b6'];
+        var playerColors = [
+            '#277f31', '#149bdf', '#d9534f', '#f0ad4e', '#5bc0de', '#9b59b6',
+            '#e67e22', '#16a085', '#2c3e50', '#8e44ad', '#f1c40f', '#e74c3c',
+            '#34495e', '#2ecc71', '#3498db', '#95a5a6', '#d35400', '#c0392b',
+            '#bdc3c7', '#7f8c8d'
+        ];
 
         function saveState() {
             // Prevent saving before initial load is complete
@@ -934,10 +939,10 @@
         }
 
         function addPlayer(overrideColor) {
-            if (activePlayers.length >= 6) return;
+            if (activePlayers.length >= 20) return;
             var id = nextPlayerId++;
             activePlayers.push(id);
-            var color = overrideColor || playerColors[(id - 1) % 6];
+            var color = overrideColor || playerColors[(id - 1) % playerColors.length];
 
             $("#players-container").append(getPlayerCardHtml(id, color));
 
@@ -952,7 +957,7 @@
             attachSliderEvents(id);
             recomputeValue(id);
 
-            if (activePlayers.length >= 6) {
+            if (activePlayers.length >= 20) {
                 $("#add-player-btn").hide();
             }
 
